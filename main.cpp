@@ -5,10 +5,8 @@
 int main(){
 
   std::vector<user> U;
+  std::vector<transaction> T;
   generateUsers(U);
-  for(std::vector<user>::iterator i = U.begin(); i != U.end(); ++i)
-  {
-    std::cout << (*i).name << " " << (*i).public_key << " " << (*i).balance << std::endl;
-   }
+  generateTransactions(T, U);
   return 0;
 }
