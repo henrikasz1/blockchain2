@@ -40,3 +40,34 @@ void generateTransactions(std::vector<transaction> &T, const std::vector<user> &
     count++;
   }
 }
+//-------------------
+void mining (block_chain &BC, std::vector<block> &B)
+{
+  std::string zeros;
+  for (size_t i = 0; i != B.size(); ++i)
+  {
+    //Genesis block
+    if (i == 0)
+    {
+      B[i].prevBlockHash = '0';
+    }
+    else
+    {
+      B[i].prevBlockHash = B[i - 1].currentHash;
+    }
+    char diff_target[B[i].difficultyTarget + 1];
+    for (size_t j = 0; j != B[i].difficultyTarget; ++j)
+    {
+      diff_target[j] = '0';
+    }
+    diff_target[B[i].difficultyTarget] = '\0';
+    zeros = diff_target;
+    do{
+      B[i].nonce++;
+      B[i].currentHash = combine_hash_function(std::to_string(B[i].nonce) + B[i].prevBlockHash + std::to_string(B[i].timeStamp) + std::to_string(B[i].version) + std::to_string(B[i].nonce));
+    }while(B[i].currentHash.substr(0, B[i].difficultyTarget) != zeros);
+    BC.newBlock(B[i]);
+
+    std::cout << "Block - > " << i << " Nonce - > " << B[i].nonce << "\n" << "Hash - > " << B[i].currentHash << "\n\n";
+  }
+}
