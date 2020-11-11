@@ -32,9 +32,10 @@ void generateTransactions(std::vector<transaction> &T, const std::vector<user> &
     num = amount(mt);
     a.senderID = U[num].public_key;
     a.recipientID = U[amount(mt)].public_key;
-    a.id = combine_hash_function(a.senderID+a.recipientID+std::to_string(count));
-    std::uniform_int_distribution<int> money(0, U[num].balance);
+    // adding 250 so that some of the transactions would be unverified
+    std::uniform_int_distribution<int> money(0, U[num].balance + 250);
     a.amount = money(mt);
+    a.id = combine_hash_function(a.senderID+a.recipientID+std::to_string(a.amount));
     T.push_back(a);
     count++;
   }
@@ -65,7 +66,8 @@ void mining (block_chain &BC, std::vector<block> &B)
     do{
       B[i].nonce++;
       std::stringstream combine;
-      combine << B[i].nonce << B[i].prevBlockHash << B[i].timeStamp << B[i].merkleRootHash << B[i].version;
+      //needs to be fixed
+      combine << B[i].nonce << B[i].prevBlockHash << B[i].timeStamp << B[i].merkleRootHash << B[i].version << B[i].nonce;
       hash = combine_hash_function(combine.str());
       B[i].merkleRootHash = hash;
       //std::cout << hash << std::endl;
