@@ -20,6 +20,7 @@ class block
 
     block();
     void setTr(std::vector<transaction> &transactions);
+    std::vector<transaction> getTransactions() const;
   private:
     //body of the block
     std::vector<transaction> transactions;

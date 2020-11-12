@@ -32,8 +32,8 @@ void generateTransactions(std::vector<transaction> &T, const std::vector<user> &
     num = amount(mt);
     a.senderID = U[num].public_key;
     a.recipientID = U[amount(mt)].public_key;
-    // adding 250 so that some of the transactions would be unverified
-    std::uniform_int_distribution<int> money(0, U[num].balance + 250);
+    // adding 300 so that some of the transactions would be unverified
+    std::uniform_int_distribution<int> money(0, U[num].balance + 300);
     a.amount = money(mt);
     a.id = combine_hash_function(a.senderID+a.recipientID+std::to_string(a.amount));
     T.push_back(a);
@@ -41,20 +41,27 @@ void generateTransactions(std::vector<transaction> &T, const std::vector<user> &
   }
 }
 //-------------------
-void mining (block_chain &BC, std::vector<block> &B)
+void mining (block_chain &BC, std::vector<block> &B, std::vector<transaction> &exec_tr)
 {
-  std::string zeros;
-  for (size_t i = 0; i != B.size(); ++i)
+  std::random_device rd;
+  std::mt19937 mt(rd());
+  std::uniform_int_distribution<int> selectBlock(0, B.size() - 1);
+
+  //checking if the block has been mined
+  bool check = false;
+  while(!check)
   {
+    unsigned int i = selectBlock(mt);
+    std::string zeros;
     std::string hash;
-    //Genesis block
-    if (i == 0)
+    std::string currentHash = B[i].merkleRootHash;
+    if(BC.index() == 0)
     {
       B[i].prevBlockHash = '0';
     }
     else
     {
-      B[i].prevBlockHash = B[i - 1].merkleRootHash;
+      B[i].prevBlockHash = BC.getLast().merkleRootHash;
     }
     char diff_target[B[i].difficultyTarget + 1];
     for (size_t j = 0; j != B[i].difficultyTarget; ++j)
@@ -63,19 +70,25 @@ void mining (block_chain &BC, std::vector<block> &B)
     }
     diff_target[B[i].difficultyTarget] = '\0';
     zeros = diff_target;
-    do{
+    do
+    {
+      if (B[i].nonce > 100000)
+      {
+        break;
+      }
       B[i].nonce++;
       std::stringstream combine;
-      //needs to be fixed
-      combine << B[i].nonce << B[i].prevBlockHash << B[i].timeStamp << B[i].merkleRootHash << B[i].version << B[i].nonce;
+      combine << B[i].nonce << B[i].prevBlockHash << B[i].timeStamp << currentHash << B[i].version << B[i].nonce;
       hash = combine_hash_function(combine.str());
       B[i].merkleRootHash = hash;
-      //std::cout << hash << std::endl;
-      //hash = combine_hash_function(std::to_string(B[i].nonce + ))
-      //B[i].currentHash = combine_hash_function(std::to_string(B[i].nonce) + B[i].prevBlockHash + std::to_string(B[i].timeStamp) + std::to_string(B[i].version) + std::to_string(B[i].nonce));
-    }while(B[i].merkleRootHash.substr(0, B[i].difficultyTarget) != zeros);
-    BC.newBlock(B[i]);
+    } while(B[i].merkleRootHash.substr(0, B[i].difficultyTarget) != zeros);
 
-    std::cout << "Block - > " << i << " Nonce - > " << B[i].nonce << "\n" << "Hash - > " << B[i].merkleRootHash << "\n\n";
+    if (B[i].merkleRootHash.substr(0, B[i].difficultyTarget) == zeros)
+    {
+      check = true;
+      exec_tr = B[i].getTransactions();
+      BC.newBlock(B[i]);
+      std::cout << "Block - > " << BC.index() << " Nonce - > " << B[i].nonce << "\n" << "Hash - > " << B[i].merkleRootHash << "\n\n";
+    }
   }
 }

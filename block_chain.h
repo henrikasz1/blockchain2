@@ -8,6 +8,8 @@ class block_chain
 {
   public:
     void newBlock(const block &Block);
+    int index() const;
+    block getLast() const;
   private:
     std::vector<block> chain;
 };

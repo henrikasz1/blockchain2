@@ -16,3 +16,7 @@ void block::setTr(std::vector<transaction> &transactions)
   }
   merkleRootHash = merkle_tree(transactions_id);
 }
+std::vector<transaction> block::getTransactions() const
+{
+  return this->transactions;
+}
