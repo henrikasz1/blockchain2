@@ -4,7 +4,7 @@
 
 **Aspects to be included in program:**
 
-**V 0.1: **
+**V 0.1:**
 
 * Generate 1000 users that must have name, publi_key and balance attributes
 * Generate 10000 transactions that must have transaction id, sender id, reciepient id and the amount of money attributes
@@ -14,7 +14,7 @@
 * Update users balances
 * Insert a mined block into a blockchain
 
-**V0.2: **
+**V0.2:**
 
 * Implement Merkle tree in block hashing
 * Implement balance and hash verification
