@@ -26,7 +26,7 @@
 * Generates 10000 transactions with the required aspects :heavy_check_mark:
 * Verifies transactions by its balance and hash :heavy_check_mark:
 * Randomly selects transactions which will be inserted into a new block :heavy_check_mark:
-* Creates five new blocks with randomly chosen transactions :hevy_check_mark:
+* Creates five new blocks with randomly chosen transactions :heavy_check_mark:
 * Tries to mine one of those five blocks and inserts the mined block into a block chain :heavy_check_mark:
-* Updates users balances
+* Updates users balances :heavy_check_mark:
 * Repeats the process until the transaction pool will be empty :heavy_check_mark:
