@@ -37,4 +37,4 @@ hash.encode('hex_codec')
 if (header['hash'] == hash[::-1].encode('hex_codec')):
     print('Valid')
 else:
-    Print('Not valid')
+    print('Not valid')
