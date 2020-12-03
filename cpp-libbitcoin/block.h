@@ -11,7 +11,6 @@ class block
   public:
     //header
     std::string prevBlockHash;
-    //std::string currentHash;
     std::string merkleRootHash;
     std::time_t timeStamp{};
     unsigned int version = 1;
