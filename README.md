@@ -1,21 +1,14 @@
 # blockchain2
 
-:hash: It is a simple program, which represents a simplified work of blockchain :hash:
+:hash: The purpose of this program is to test libbitcoin and bitcoinlib libraries :hash:
 
-**Aspects to be included in program:**
-* Generate 1000 users that must have name, publi_key and balance attributes
-* Generate 10000 transactions that must have transaction id, sender id, reciepient id and the amount of money attributes
-* Randomly choose 100 transactions which will be inserted into a new block
-* Mine a new block and find a hash which will comply difficulty targer
-* Delete transactions from the pool that has been added to a new block
-* Update users balances
-* Insert a mined block into a blockchain
+**libbitcoin:**
+* Install libbitcoin library (was using Linux Ubuntu via Oracle virtual machine) :heavy_check_mark:
+* Implement merkle tree to the code using libbitcoin library :heavy_check_mark:
 
-**How the program works:**
+**bitcoinlib**
 
-* Generates 1000 users with the required aspects :heavy_check_mark:
-* Generates 10000 transactions with the required aspects :heavy_check_mark:
-* Randomly chooses 100 transactions and deletes them from the pool :heavy_check_mark:
-* Mines a new block and finds a hash which complies difficulty target (which is 3) :heavy_check_mark:
-* Inserts a newly created block into a blockchain :heavy_check_mark:
-* Updated users balances :heavy_check_mark:
+* Install bitcoinlib library :heavy_check_mark:
+* Make a task, which calculates transaction's fee :heavy_check_mark:
+* Make a task, which check's if a block i valid :heavy_check_mark:
+* Insert the code into VU Bitcoin full node :heavy_check_mark:
